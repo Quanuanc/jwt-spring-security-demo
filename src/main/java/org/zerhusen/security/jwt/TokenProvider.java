@@ -23,10 +23,8 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider implements InitializingBean {
 
-   private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
-
    private static final String AUTHORITIES_KEY = "auth";
-
+   private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
    private final String base64Secret;
    private final long tokenValidityInMilliseconds;
    private final long tokenValidityInMillisecondsForRememberMe;
@@ -92,16 +90,16 @@ public class TokenProvider implements InitializingBean {
          return true;
       } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
          log.info("Invalid JWT signature.");
-         log.trace("Invalid JWT signature trace: {}", e);
+         log.trace("Invalid JWT signature trace: {}", e.getMessage());
       } catch (ExpiredJwtException e) {
          log.info("Expired JWT token.");
-         log.trace("Expired JWT token trace: {}", e);
+         log.trace("Expired JWT token trace: {}", e.getMessage());
       } catch (UnsupportedJwtException e) {
          log.info("Unsupported JWT token.");
-         log.trace("Unsupported JWT token trace: {}", e);
+         log.trace("Unsupported JWT token trace: {}", e.getMessage());
       } catch (IllegalArgumentException e) {
          log.info("JWT token compact of handler are invalid.");
-         log.trace("JWT token compact of handler are invalid trace: {}", e);
+         log.trace("JWT token compact of handler are invalid trace: {}", e.getMessage());
       }
       return false;
    }

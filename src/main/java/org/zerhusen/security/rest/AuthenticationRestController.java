@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zerhusen.security.rest.dto.LoginDto;
 import org.zerhusen.security.jwt.JWTFilter;
 import org.zerhusen.security.jwt.TokenProvider;
+import org.zerhusen.security.rest.dto.LoginDto;
 
 import javax.validation.Valid;
 
@@ -43,7 +43,7 @@ public class AuthenticationRestController {
       Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
       SecurityContextHolder.getContext().setAuthentication(authentication);
 
-      boolean rememberMe = (loginDto.isRememberMe() == null) ? false : loginDto.isRememberMe();
+      boolean rememberMe = loginDto.isRememberMe() != null && loginDto.isRememberMe();
       String jwt = tokenProvider.createToken(authentication, rememberMe);
 
       HttpHeaders httpHeaders = new HttpHeaders();
